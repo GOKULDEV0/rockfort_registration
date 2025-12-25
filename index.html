@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rockfort Stay Inn - Registration</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- jsPDF Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        :root {
+            --navy: #0f1c3f;
+            --orange: #f7941d;
+            --gray: #f4f7f6;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--gray);
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        /* --- Header UI --- */
+        .site-header {
+            background-color: var(--navy);
+            color: white;
+            padding: 40px 20px 80px;
+            text-align: center;
+            position: relative;
+            clip-path: ellipse(150% 100% at 50% 0%);
+        }
+
+        .site-header h1 {
+            color: var(--orange);
+            font-size: 2.5rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* --- Form Card --- */
+        .container {
+            max-width: 850px;
+            margin: -50px auto 50px;
+            background: white;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--navy);
+            border-bottom: 3px solid var(--orange);
+            display: inline-block;
+            padding-bottom: 5px;
+            margin-bottom: 40px;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .full-width { grid-column: 1 / -1; }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        input, select, textarea {
+            width: 90%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            background: #fdfdfd;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--orange);
+            background: white;
+        }
+
+        .btn-area {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .btn {
+            background-color: var(--navy);
+            color: white;
+            padding: 15px 50px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            background-color: var(--orange);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: var(--navy);
+            color: white;
+            font-size: 0.9rem;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="site-header">
+        <h1>Rockfort Stay Inn</h1>
+        <p>Guest Registration Portal</p>
+    </div>
+
+    <div class="container">
+        <h2>Registration Form</h2>
+        <form id="regForm">
+            <div class="form-grid">
+                <!-- Row 1 -->
+                <div>
+                    <label>First Name</label>
+                    <input type="text" id="fname" placeholder="First Name">
+                </div>
+                <div>
+                    <label>Last Name</label>
+                    <input type="text" id="lname" placeholder="Last Name">
+                </div>
+
+                <!-- Row 2 -->
+                <div>
+                    <label>Contact Number</label>
+                    <input type="text" id="contact" placeholder="+91 99999 99999">
+                </div>
+                <div>
+                    <label>Email Address</label>
+                    <input type="email" id="email" placeholder="guest@example.com">
+                </div>
+
+                <!-- Row 3 -->
+                <div class="full-width">
+                    <label>Purpose of Visit</label>
+                    <input type="text" id="purpose" placeholder="Business / Tourism">
+                </div>
+
+                <!-- Row 4 -->
+                <div class="full-width">
+                    <label>Company Contact Details</label>
+                    <textarea id="company" rows="2" placeholder="Company Name, Address..."></textarea>
+                </div>
+
+                <!-- Row 5 -->
+                <div class="full-width">
+                    <label>Reference (Emergency Contact)</label>
+                    <input type="text" id="reference" placeholder="Name & Phone Number">
+                </div>
+
+                <!-- Row 6 -->
+                <div>
+                    <label>ID Proof Type</label>
+                    <select id="idType">
+                        <option value="Aadhar Card">Aadhar Card</option>
+                        <option value="Driving License">Driving License</option>
+                        <option value="Passport">Passport</option>
+                    </select>
+                </div>
+                <div>
+                    <label>ID Number</label>
+                    <input type="text" id="idNum" placeholder="XXXX XXXX XXXX">
+                </div>
+
+                <!-- Row 7 -->
+                <div>
+                    <label>Room Number</label>
+                    <input type="text" id="room" placeholder="Flat / Room No">
+                </div>
+                <div>
+                    <label>Mode of Payment</label>
+                    <select id="payment">
+                        <option value="Online/UPI">Online/UPI</option>
+                        <option value="Cash">Cash</option>
+                        <option value="Card">Card</option>
+                    </select>
+                </div>
+
+                <!-- Row 8 -->
+                <div>
+                    <label>Duration (Days)</label>
+                    <input type="number" id="duration" value="1">
+                </div>
+                <div>
+                    <label>Check-in Date</label>
+                    <input type="date" id="date">
+                </div>
+            </div>
+
+            <div class="btn-area">
+                <button type="button" class="btn" onclick="generatePDF()">
+                    <i class="fa-solid fa-file-pdf"></i> Generate PDF
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <footer>
+        <p>rockfortstayinn@gmail.com | www.rockfortstayinn.com</p>
+    </footer>
+
+    <script>
+        document.getElementById('date').valueAsDate = new Date();
+
+        function loadImage(url) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.src = url;
+                img.onload = () => resolve(img);
+                img.onerror = (err) => reject(err);
+            });
+        }
+
+        async function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            
+            // LOAD IMAGE (Make sure images/background.png exists)
+            let bgImage;
+            try {
+                bgImage = await loadImage("images/background.png");
+            } catch (error) {
+                alert("Error: 'images/background.png' not found. Please ensure the file exists.");
+                return;
+            }
+
+            const doc = new jsPDF('p', 'mm', 'a4');
+            const width = doc.internal.pageSize.getWidth();
+            const height = doc.internal.pageSize.getHeight();
+
+            // --- PAGE 1: REGISTRATION FORM ---
+            
+            // 1. Draw Background
+            doc.addImage(bgImage, 'PNG', 0, 0, width, height);
+
+            // 2. Title Section (Matches target image)
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(18);
+            doc.setTextColor(0, 0, 0);
+            
+            // "Registration Form" centered and underlined
+            doc.text("Registration Form", width / 2, 55, { align: "center" });
+            doc.setLineWidth(1);
+            doc.line(70, 57, 140, 57);
+
+            // Date on right side
+            doc.setFontSize(10);
+            doc.text("Date:-", 150, 55);
+            doc.setFont("helvetica", "normal");
+            doc.text(document.getElementById('date').value, 165, 55);
+
+            // 3. Draw Fields (Exact Layout as Target Image)
+            // Left Column X = 25, Right Column X = 130 (approx)
+            // Bullets included
+            
+            let y = 70; // Start Height
+            const leftX = 25;
+            const rightX = 130;
+            const valueOffset = 60; // Distance from label to value
+
+            // Helper to draw formatted Label & Value
+            // If isRightCol is true, it draws at rightX, otherwise leftX
+            function drawField(label, value, isRightCol = false, customY = null) {
+                const x = isRightCol ? rightX : leftX;
+                const currentY = customY || y;
+                
+                doc.setFont("helvetica", "bold");
+                doc.setFontSize(10);
+                doc.text("•  " + label, x, currentY); // Bullet point + Label
+                
+                if (value) {
+                    doc.setFont("helvetica", "normal");
+                    // Check if right column to adjust value position
+                    const valX = isRightCol ? (x + 30) : (x + 50); 
+                    doc.text(value, valX, currentY);
+                }
+            }
+
+            // --- Row 1: First Name & Last Name ---
+            drawField("First Name:", document.getElementById('fname').value);
+            drawField("Last name:", document.getElementById('lname').value, true);
+            y += 14;
+
+            // --- Row 2: Contact & Email ---
+            drawField("Contact number:", document.getElementById('contact').value);
+            drawField("Email address:", document.getElementById('email').value, true);
+            y += 15;
+
+            // --- Row 3: Purpose ---
+            drawField("Purpose of visit:", document.getElementById('purpose').value);
+            y += 15;
+
+            // --- Row 4: Company Details ---
+            drawField("Company contacts details:", "");
+            y += 7;
+            doc.setFont("helvetica", "normal");
+            const companyTxt = document.getElementById('company').value;
+            const splitComp = doc.splitTextToSize(companyTxt, 150);
+            doc.text(splitComp, leftX + 10, y);
+            y += 25; // Big gap for company details
+
+            // --- Row 5: Reference ---
+            drawField("Reference (to contact in case of an emergency):", "");
+            doc.setFont("helvetica", "normal");
+            doc.text(document.getElementById('reference').value, leftX + 100, y); 
+            y += 15;
+
+            // --- Row 6: ID Proof (Special Long Label) ---
+            // The target image splits this into two lines
+            doc.setFont("helvetica", "bold");
+            doc.text("•  Id proof (Every Indian guest need to submit Aadhar card to stay, driving license,", leftX, y);
+            y += 7;
+            doc.text("   passport):", leftX, y);
+            
+            // Value placed next to "passport):"
+            const idVal = `${document.getElementById('idType').value} - ${document.getElementById('idNum').value}`;
+            doc.setFont("helvetica", "normal");
+            doc.text(idVal, leftX + 40, y);
+            y += 15;
+
+            // --- Row 7: ID Copy ---
+            drawField("Id proof copy attached:", "Yes"); // Assuming Yes for PDF
+            y += 15;
+
+            // --- Row 8: Payment ---
+            drawField("Mode of payment:", document.getElementById('payment').value);
+            y += 15;
+
+            // --- Row 9: Duration ---
+            drawField("Duration of stay:", document.getElementById('duration').value + " Days");
+            y += 15;
+
+            // --- Row 10: Room Number ---
+            drawField("Flat/Room Number:", document.getElementById('room').value);
+            
+            // --- Declaration & Signatures ---
+            // Assuming the target image footer area (not fully visible in crop but standard)
+            y = 250; 
+            
+            // Footer Signatures
+            doc.setFontSize(10);
+            doc.setFont("helvetica", "bold");
+            // Assuming signatures are part of standard flow, though target image cuts off
+            // We will add them to be safe
+            
+            // (Optional: If target image has no signatures at bottom of page 1, comment this out)
+            // But usually forms need them.
+            /* 
+            doc.line(25, y, 80, y);
+            doc.text("Guest Signature", 25, y + 5);
+            doc.line(130, y, 185, y);
+            doc.text("Reception Signature", 130, y + 5);
+            */
+
+            // --- PAGE 2: HOUSE RULES ---
+            doc.addPage();
+            doc.addImage(bgImage, 'PNG', 0, 0, width, height);
+
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(16);
+            doc.setTextColor(0, 0, 0);
+            doc.text("House rules", width / 2, 50, { align: "center" });
+
+            doc.setFontSize(10);
+            const rules = [
+                "1. Guests will be charged per night. Check-in time is 12:00 p.m. on the day of arrival and the check-out time is 11AM next day",
+                "2. Bills must be settled by cash or online payment, personal cheques are not accepted. Payment should be completed before your stay commences", 
+                "3. The guests shall be liable to pay for any loss or damage to any of furniture, fixtures, fittings, appliances, crockery and cutlery.  In case of any loss or damage the guest will be charged for after a damage assessment",
+                "4. Inviting strangers into the guest rooms, to use the facilities and or amenities is prohibited. For security reasons, visitors must register at reception before entering the room.",
+                "5. No guest is allowed to give up his or her room to be used by third parties even if the room has been duly paid for.",
+                "6. It is mandatory for all guests to present valid photo identification at the time of check-in. The identification proofs accepted are Aadhar Card, Driving License, and Passport.",
+                "7. Guests are encouraged to be personally being present in the unit during the visit of our housekeeping team for the servicing of the unit.",
+                "8. The management is not responsible for any accident or injury to any guest during the stay on the premises.",
+                "9. Rights of admission to the property are reserved. The management is at liberty to ask a guest to leave if the house rules are not being followed by the guest.",
+                "10. Smoking is strictly not allowed in the Bed Rooms. The premises shall not be used for any illegal or immoral activity. Possession and consumption of drugs is not allowed. Gambling or any other behaviour that is against public morals in the hallways or guest rooms is prohibited.",
+                "11. No pets allowed in the property."
+
+            ];
+
+            let ruleY = 65;
+            rules.forEach(rule => {
+                const splitRule = doc.splitTextToSize(rule, 170);
+                doc.text(splitRule, 20, ruleY);
+                ruleY += (splitRule.length * 5) + 3;
+            });
+
+            // Signatures Page 2
+            const sigY = height - 50;
+            doc.text("Name : " + document.getElementById('fname').value, 25, sigY);
+            doc.text("Signature :", 140, sigY);
+
+            // Save PDF
+            doc.save(`Rockfort_Reg_${document.getElementById('fname').value}.pdf`);
+        }
+    </script>
+</body>
+</html>
